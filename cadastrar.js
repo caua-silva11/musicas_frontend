@@ -1,19 +1,25 @@
-const urlBackend = "http://localhost:3000"; 
+const urlBackend = "http://localhost:3000"
 
-const inputTitulo = document.getElementById("titulo");
-const inputArtista = document.getElementById("artista");
-const inputGenero = document.getElementById("genero");
-const inputAno = document.getElementById("ano");
-const inputDuracao = document.getElementById("duracao");
+const inputTitulo = document.getElementById("titulo")
+const inputArtista = document.getElementById("artista")
+const inputGenero = document.getElementById("genero")
+const inputAno = document.getElementById("ano")
+const inputDuracao = document.getElementById("duracao")
 
-const botaoCadastrar = document.getElementById("botaoCadastrar");
+const botaoCadastrar = document.getElementById("botaoCadastrar")
 
-botaoCadastrar.addEventListener("click", cadastrarMusica);
+botaoCadastrar.addEventListener("click", cadastrarMusica)
 
 async function cadastrarMusica() {
-    if (!inputTitulo.value || !inputArtista.value || !inputGenero.value || !inputAno.value || !inputDuracao.value) {
-        alert("Preencha todos os campos");
-        return;
+    if (
+        inputTitulo.value === "" ||
+        inputArtista.value === "" ||
+        inputGenero.value === "" ||
+        inputAno.value === "" ||
+        inputDuracao.value === ""
+    ) {
+        alert("Preencha todos os campos!")
+        return
     }
 
     const musica = {
@@ -22,7 +28,7 @@ async function cadastrarMusica() {
         genero: inputGenero.value,
         ano: inputAno.valueAsNumber,
         duracao: inputDuracao.valueAsNumber
-    };
+    }
 
     const resposta = await fetch(`${urlBackend}/cadastrar`, {
         method: "POST",
@@ -30,10 +36,11 @@ async function cadastrarMusica() {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(musica)
-    });
+    })
 
-    const dados = await resposta.json();
-    alert(dados.mensagem);
+    const respostaTransformada = await resposta.json()
 
-    window.location.href = "index.html";
+    alert(respostaTransformada.mensagem)
+
+    window.location.href = "index.html"
 }
